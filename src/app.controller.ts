@@ -17,7 +17,9 @@ export class AppController {
   @Get('/quotes')
   @Render('quoteList')
   getAllQuotes() {
-    
+    return {
+      quotes: quotes.quotes
+    };
   }
 
   @Get('/random')
