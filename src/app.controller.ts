@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import {quotes} from './quotes';
 
@@ -13,7 +13,7 @@ export class AppController {
       message: this.appService.getHello()
     };
   }
-
+  //működik
   @Get('/quotes')
   @Render('quoteList')
   getAllQuotes() {
@@ -22,29 +22,64 @@ export class AppController {
     };
   }
 
+  //működik
   @Get('/random')
   @Render('randomQuote')
   getRandomQuote() {
-    
+    const randomIndex = Math.floor(Math.random() * quotes.quotes.length);
+    const randomQuote = quotes.quotes[randomIndex];
+    return { quote: randomQuote.quote, author: randomQuote.author };
   }
 
-  @Get('/author')
-  @Render('topAuthor')
-  getTopAuthor() {
-    
-  } 
+  /*
+  @Get('/topAuthors')
+  @Render('topAuthors')
+  getTopAuthors() {
+    const authors = this.quotes.quotes.quotes.reduce((acc, current) => {
+      if (!acc[current.author]) {
+        acc[current.author] = 1;
+      } else {
+        acc[current.author]++;
+      }
+      return acc;
+    }, {});
+
+    const sortedAuthors = Object.entries(authors).sort((a, b) => b[1] - a[1]);
+
+    return sortedAuthors;
+  }
+  */
   
-  
-  @Get('/quoteid')
+  //működik
+  @Get('/quotes/:id')
   @Render('quoteId')
-  getQuoteId() {
-    
+  oneQuote(@Param('id') id: string) {
+    return {
+      message: quotes.quotes[parseInt(id)+1].quote,
+    }
   }
 
+  
+  
   @Get('/delete')
   @Render('deleteQuote')
-  getDeleteQuote() {
-    
+  getDeleteQuote(@Param('id') id: string) {
+    const index = quotes.quotes.findIndex((quote) => quote.id === parseInt(id));
+    if (index === -1) {
+      return 'Unknown quote ID';
+    }
+    quotes.quotes.splice(index, 1);
+    return 'Quote deleted successfully';
   }
+  
+  /*
+  @Get('/search')
+  @Render('search')
+  searchQuotes(@Query('text') text: string) {
+    const filteredQuotes = quotes.quotes.filter(quote => quote.quote.toLowerCase().includes(text.toLowerCase()));
+    return { quotes: filteredQuotes };
+  }
+  */
+
 
 }

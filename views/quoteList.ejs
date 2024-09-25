@@ -7,8 +7,10 @@
 </head>
 <body>
   <h1>Idézetek</h1>
-    <ol>
-      <%= <li>Test</li> %>
-    </ol>
+  <ul>
+    <% quotes.forEach(function(quote) { %>
+      <li><strong><%= quote.author %></strong>: "<%= quote.quote %>"</li>
+    <% }); %>
+  </ul>
 </body>
 </html>

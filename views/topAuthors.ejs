@@ -3,9 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <title>Top Authors</title>
+    <style>
+      table {
+        width: 50%;
+        margin: 0 auto;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 10px;
+        border: 1px solid black;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Top Authors</h1>
+    <table>
+      <tr>
+        <th>Author</th>
+        <th>Quote Count</th>
+      </tr>
+      <% authors.forEach(function(author) { %>
+        <tr>
+          <td><%= author.author %></td>
+          <td><%= author.count %></td>
+        </tr>
+      <% }); %>
+    </table>
+  </body>
+  </html>
+  3.4 quoteId.ejs – Adott ID-jú idézet megjelenítése
+  html
+  Kód másolása
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Quote</title>
+  </head>
+  <body>
+    <% if (error) { %>
+      <h1><%= error %></h1>
+    <% } else { %>
+      <h1>"<%= quote %>"</h1>
+      <p>- <%= author %></p>
+    <% } %>
+  </body>
 </html>
